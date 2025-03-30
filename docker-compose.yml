@@ -7,7 +7,6 @@ services:
       - db
     ports:
       - "8069:8069"
-    entrypoint: /opt/odoo/start.sh
     volumes:
       - odoo-data:/var/lib/odoo
     environment:
