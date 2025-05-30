@@ -7,8 +7,9 @@
     'category': 'Project',
     'depends': ['project'],
     'data': [
-        # Archivos XML para vistas, acciones, etc.
-        # uc7f-fzmy-ictr
+        'security/groups.xml',
+        'security/ir.model.access.csv',
+        'security/rules.xml',
     ],
     'installable': True,
     'application': False,
