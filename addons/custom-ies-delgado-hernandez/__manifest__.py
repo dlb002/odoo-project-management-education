@@ -10,6 +10,7 @@
         'security/groups.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',
+        'views/project_views.xml',
     ],
     'installable': True,
     'application': False,
