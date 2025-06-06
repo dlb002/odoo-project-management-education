@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <data noupdate="0">
+    <data noupdate="1">
 
-    <!-- Regla: los profesores solo ven sus propias tareas -->
-    <record id="rule_task_profesor_own" model="ir.rule">
-      <field name="name">Profesor - Solo sus tareas</field>
-      <field name="model_id" ref="project.model_project_task"/>
-      <field name="groups" eval="[(4, ref('custom-ies-delgado-hernandez.group_project_profesor'))]"/>
-      <field name="domain_force">[('create_uid', '=', user.id)]</field>
-      <field name="perm_read" eval="1"/>
-      <field name="perm_write" eval="1"/>
-      <field name="perm_create" eval="1"/>
-      <field name="perm_unlink" eval="0"/>
-    </record>
+        <!-- Regla para Dirección: puede ver todo -->
+        <record id="project_task_rule_director" model="ir.rule">
+            <field name="name">Acceso Total a Tareas - Dirección</field>
+            <field name="model_id" ref="project.model_project_task"/>
+            <field name="groups" eval="[(4, ref('custom-ies-delgado-hernandez.group_director'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
 
-    <!-- Regla: orientador solo lectura de sus tareas -->
-    <record id="rule_task_orientador_read" model="ir.rule">
-      <field name="name">Orientador - Ver sus tareas</field>
-      <field name="model_id" ref="project.model_project_task"/>
-      <field name="groups" eval="[(4, ref('custom-ies-delgado-hernandez.group_project_orientador'))]"/>
-      <field name="domain_force">[('create_uid', '=', user.id)]</field>
-      <field name="perm_read" eval="1"/>
-      <field name="perm_write" eval="0"/>
-      <field name="perm_create" eval="0"/>
-      <field name="perm_unlink" eval="0"/>
-    </record>
+        <!-- Regla para Usuario General: solo tareas asignadas -->
+        <record id="project_task_rule_general_user" model="ir.rule">
+            <field name="name">Ver Solo Tareas Asignadas</field>
+            <field name="model_id" ref="project.model_project_task"/>
+            <field name="groups" eval="[(4, ref('custom-ies-delgado-hernandez.group_general_user'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
 
-  </data>
+    </data>
 </odoo>
