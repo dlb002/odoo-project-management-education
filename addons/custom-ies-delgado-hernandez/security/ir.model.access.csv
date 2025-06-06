@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_project_director,access_project_director,project.model_project_project,custom-ies-delgado-hernandez.group_director,1,1,1,1
 access_task_director,access_task_director,project.model_project_task,custom-ies-delgado-hernandez.group_director,1,1,1,1
 access_task_general_user,access_task_general_user,project.model_project_task,custom-ies-delgado-hernandez.group_general_user,1,1,1,0
+access_project_tags_all,access_project_tags_all,project.model_project_tags,base.group_user,1,1,1,1
