@@ -10,9 +10,8 @@
         'security/groups.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',
-        #'data/mail_template_proyect.xml',
-        #'data/mail_template_task.xml',
-        #'data/ir_cron.xml'
+        'views/project_views.xml',
+        'views/project_task_views.xml',
     ],
     'installable': True,
     'application': False,
