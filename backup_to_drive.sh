@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ruta local donde se guardan los backups.
-LOCAL_BACKUP_DIR="/home/odoo/odoo-project-management-education/odoo_backups"
+LOCAL_BACKUP_DIR="/odoo-project-management-education/odoo_backups"
 
 # Nombre del remoto de rclone
 REMOTE_NAME="googledrive"
