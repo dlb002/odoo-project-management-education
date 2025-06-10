@@ -8,7 +8,7 @@ DB_NAME=postgres
 
 # Credenciales y configuración.
 DB_USER=odoo
-DB_CONTAINER=db
+DB_CONTAINER=odoo-project-management-education-db-1
 BACKUP_DIR=./backups
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")
 FILE_NAME="${DB_NAME}_${DATE}.sql"
