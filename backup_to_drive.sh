@@ -2,6 +2,7 @@
 
 CONTAINER_NAME="odoo-project-management-education-odoo-1"
 SOURCE_PATH="/var/lib/odoo/.local/share/Odoo/backups/ies_delgado_hernandez"
+DEST_ROOT="$HOME/odoo_backups"
 DEST_PATH="$HOME/odoo_backups/ies_delgado_hernandez"
 LOG_FILE="$HOME/rclone_backup.log"
 REMOTE_NAME="googledrive"
