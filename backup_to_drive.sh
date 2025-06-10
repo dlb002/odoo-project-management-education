@@ -20,11 +20,12 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "☁️ Subiendo backups a Google Drive..."
-rclone sync "$DEST_PATH" "$REMOTE_NAME:$REMOTE_DIR" --log-level INFO --log-file "$LOG_FILE"
+rclone sync "$DEST_PATH" "$REMOTE_NAME:$REMOTE_DIR" --log-level INFO --log-file "$LOG_FILE" --delete-during
 
 if [ $? -eq 0 ]; then
   echo "Sincronización completada correctamente."
   rm -rf "$DEST_PATH"
+  rclone delete --min-age 30d googledrive:backup_odoo/ies_delgado_hernandez
 else
   echo "Error durante la sincronización con Google Drive."
 fi
