@@ -1,20 +1,16 @@
 #!/bin/bash
 
-# Ruta local donde se guardan los backups.
-LOCAL_BACKUP_DIR="/odoo-project-management-education/odoo_backups"
-
-# Nombre del remoto de rclone
+BACKUP_DIR="./odoo_backups"
+LOG_FILE="$HOME/rclone_backup.log"
 REMOTE_NAME="googledrive"
+REMOTE_DIR="backup_odoo"
 
-# Ruta en Google Drive donde quieres guardar los backups
-REMOTE_DIR="$REMOTE_NAME:/odoo_backups"
-
-# Ejecutar sincronización
 echo "Sincronizando backups con Google Drive..."
-rclone sync "$LOCAL_BACKUP_DIR" "$REMOTE_DIR" --progress --log-file="/var/log/rclone_backup.log"
+
+rclone sync "$BACKUP_DIR" "$REMOTE_NAME:$REMOTE_DIR" --log-level INFO --log-file "$LOG_FILE"
 
 if [ $? -eq 0 ]; then
-    echo "Sincronización completada correctamente."
+  echo "Sincronización completada correctamente."
 else
-    echo "Error durante la sincronización con Google Drive."
+  echo "Error durante la sincronización con Google Drive."
 fi
