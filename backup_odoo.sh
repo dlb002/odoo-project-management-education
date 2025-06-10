@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Crear carpeta de backups si no existe.
+mkdir -p ./backups
+
 # Nombre de la BDD a respaldar.
 DB_NAME=postgres
 
