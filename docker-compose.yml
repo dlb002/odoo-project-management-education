@@ -1,6 +1,6 @@
 services:
   odoo:
-    image: odoo:17
+    build: .
     container_name: odoo-project-management-education-odoo-1
     depends_on:
       - db
@@ -10,6 +10,7 @@ services:
       - ./addons:/mnt/extra-addons
       - ./config/odoo.conf:/etc/odoo/odoo.conf
       - odoo-data:/var/lib/odoo
+      - ./odoo_backups:/var/lib/odoo/.local/share/Odoo/backups
     environment:
       - HOST=db
       - USER=odoo
