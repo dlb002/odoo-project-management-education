@@ -7,6 +7,9 @@ LOG_FILE="$HOME/rclone_backup.log"
 REMOTE_NAME="googledrive"
 REMOTE_DIR="backup_odoo/ies_delgado_hernandez"
 
+# Crear carpeta destino si no existe
+mkdir -p "$DEST_ROOT"
+
 echo "Copiando backups desde el contenedor $CONTAINER_NAME ..."
 docker cp "$CONTAINER_NAME:$SOURCE_PATH" "$DEST_PATH"
 
