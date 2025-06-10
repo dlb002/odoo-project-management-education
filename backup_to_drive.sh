@@ -24,6 +24,7 @@ rclone sync "$DEST_PATH" "$REMOTE_NAME:$REMOTE_DIR" --log-level INFO --log-file 
 
 if [ $? -eq 0 ]; then
   echo "Sincronización completada correctamente."
+  rm -rf "$DEST_PATH"
 else
   echo "Error durante la sincronización con Google Drive."
 fi
