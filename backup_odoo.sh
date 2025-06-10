@@ -1,40 +1,55 @@
 #!/bin/bash
 
-# Crear carpeta de backups si no existe.
 mkdir -p ./backups
 
-# Nombre de la base de datos a respaldar.
 DB_NAME=ies_delgado_hernandez
-
-# Contenedor de Odoo.
+DB_CONTAINER=odoo-project-management-education-db-1
 ODOO_CONTAINER=odoo-project-management-education-odoo-1
-
-# Directorio local donde guardar el backup.
 BACKUP_DIR=./backups
-
-# Fecha para el archivo.
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")
-
-# Nombre del archivo backup zip.
+TMP_DIR="./tmp_backup_$DATE"
 FILE_NAME="${DB_NAME}_${DATE}.zip"
 FILE_PATH="$BACKUP_DIR/$FILE_NAME"
 
-# Ruta temporal dentro del contenedor para guardar el backup.
-TMP_PATH="/tmp/$FILE_NAME"
+# Crear estructura de directorios con la carpeta raíz igual al nombre de la base.
+mkdir -p $TMP_DIR/$DB_NAME
 
-# Ejecutar backup con CLI de Odoo dentro del contenedor.
-docker exec -t $ODOO_CONTAINER odoo --backup --database=$DB_NAME --zip --file=$TMP_PATH
+echo "Generando dump de la base de datos..."
+docker exec -t $DB_CONTAINER pg_dump -U odoo $DB_NAME > $TMP_DIR/$DB_NAME/dump.sql
+if [ $? -ne 0 ]; then
+  echo "Error: no se pudo crear el dump de la base de datos."
+  rm -rf $TMP_DIR
+  exit 1
+fi
 
-# Copiar el backup desde el contenedor al host local.
-docker cp $ODOO_CONTAINER:$TMP_PATH $FILE_PATH
+echo "Copiando filestore desde contenedor Odoo..."
+docker cp $ODOO_CONTAINER:/var/lib/odoo/filestore/$DB_NAME $TMP_DIR/$DB_NAME/filestore
+if [ $? -ne 0 ]; then
+  echo "Error: no se pudo copiar el filestore."
+  rm -rf $TMP_DIR
+  exit 1
+fi
 
-# Eliminar el archivo temporal dentro del contenedor.
-docker exec -t $ODOO_CONTAINER rm -f $TMP_PATH
+echo "Creando manifest.json..."
+cat > $TMP_DIR/$DB_NAME/manifest.json << EOF
+{
+  "database": "$DB_NAME",
+  "backup_date": "$DATE",
+  "info": "Backup generado automáticamente para restauración web"
+}
+EOF
 
-# Comprobar que el archivo backup existe y mostrar tamaño.
+echo "Creando archivo ZIP compatible con restauración web..."
+cd $TMP_DIR
+zip -r $FILE_PATH $DB_NAME > /dev/null
+cd -
+
+rm -rf $TMP_DIR
+
 if [ -f "$FILE_PATH" ]; then
     SIZE=$(ls -lh "$FILE_PATH" | awk '{print $5}')
-    echo "Backup ZIP guardado en $FILE_PATH (tamaño: $SIZE)"
+    echo "Backup ZIP compatible guardado en $FILE_PATH (tamaño: $SIZE)"
 else
-    echo "Error: no se pudo crear el backup ZIP."
+    echo "Error: no se pudo crear el archivo ZIP compatible."
 fi
+
