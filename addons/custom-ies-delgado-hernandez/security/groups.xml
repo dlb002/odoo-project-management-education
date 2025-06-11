@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Define groups for user roles -->
     <data noupdate="1">
-
+        <!-- Director Group -->
         <record id="group_director" model="res.groups">
             <field name="name">Dirección</field>
         </record>
-
+        <!-- General User Group -->
         <record id="group_general_user" model="res.groups">
             <field name="name">Usuario General</field>
         </record>
-
     </data>
 </odoo>

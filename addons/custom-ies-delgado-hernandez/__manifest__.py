@@ -1,8 +1,8 @@
 {
     'name': 'Custom IES Delgado Hernandez',
     'version': '1.0',
-    'summary': 'Personalizaciones para la gestión de proyectos',
-    'description': 'Este módulo extiende la funcionalidad de Odoo para la gestión de proyectos, adaptándolo a las necesidades del centro.',
+    'summary': ' Custom module for IES Delgado Hernandez',
+    'description': ' This module adds custom functionality for the IES Delgado Hernandez project management system.',
     'author': 'Daniel López Bermúdez',
     'category': 'Project',
     'depends': ['project'],

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Regla para Dirección: puede ver todas las tareas -->
+        <!-- Direction rule: full access to all tasks -->
         <record id="rule_task_director_all" model="ir.rule">
             <field name="name">Dirección - Acceso completo a tareas</field>
             <field name="model_id" ref="project.model_project_task"/>
@@ -9,7 +9,7 @@
             <field name="domain_force">[(1, '=', 1)]</field>
         </record>
 
-        <!-- Regla para Usuario General: solo sus propias tareas -->
+        <!-- General User rule: access only to own tasks -->
         <record id="rule_task_general_user_own" model="ir.rule">
             <field name="name">Usuario General - Solo tareas propias</field>
             <field name="model_id" ref="project.model_project_task"/>
