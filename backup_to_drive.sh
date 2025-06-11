@@ -1,32 +1,26 @@
 #!/bin/bash
 
-CONTAINER_NAME="odoo-project-management-education-odoo-1"
-SOURCE_PATH="/var/lib/odoo/.local/share/Odoo/backups/ies_delgado_hernandez"
-DEST_ROOT="$HOME/odoo_backups"
-DEST_PATH="$HOME/odoo_backups/ies_delgado_hernandez"
+LOCAL_PATH="$HOME/odoo_backups/ies_delgado_hernandez"
 LOG_FILE="$HOME/rclone_backup.log"
 REMOTE_NAME="googledrive"
 REMOTE_DIR="backup_odoo/ies_delgado_hernandez"
 
-# Crear carpeta destino si no existe
-mkdir -p "$DEST_ROOT"
-
-echo "Copiando backups desde el contenedor $CONTAINER_NAME ..."
-docker cp "$CONTAINER_NAME:$SOURCE_PATH" "$DEST_PATH"
-
-if [ $? -ne 0 ]; then
-  echo "Error copiando backups desde el contenedor."
+# Verificamos si la carpeta existe.
+if [ ! -d "$LOCAL_PATH" ]; then
+  echo "❌ La carpeta local '$LOCAL_PATH' no existe. Abortando."
   exit 1
 fi
 
-echo "☁️ Subiendo backups a Google Drive..."
-rclone sync "$DEST_PATH" "$REMOTE_NAME:$REMOTE_DIR" --log-level INFO --log-file "$LOG_FILE" --delete-during
+echo "☁️ Subiendo backups desde $LOCAL_PATH a Google Drive..."
+rclone sync "$LOCAL_PATH" "$REMOTE_NAME:$REMOTE_DIR" --log-level INFO --log-file "$LOG_FILE" --delete-during
 
 if [ $? -eq 0 ]; then
-  echo "Sincronización completada correctamente."
-  rm -rf "$DEST_PATH"
-  rclone delete --min-age 30d googledrive:backup_odoo/ies_delgado_hernandez
-else
-  echo "Error durante la sincronización con Google Drive."
-fi
+  echo "✅ Sincronización completada correctamente."
 
+  # Borrar archivos remotos con más de 30 días
+  echo "🧼 Eliminando archivos remotos con más de 30 días..."
+  rclone delete --min-age 30d "$REMOTE_NAME:$REMOTE_DIR"
+else
+  echo "❌ Error durante la sincronización con Google Drive."
+  exit 1
+fi
