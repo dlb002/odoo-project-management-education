@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCAL_PATH="$HOME/odoo_backups/ies_delgado_hernandez"
+LOCAL_PATH="$HOME/odoo-project-management-education/odoo_backups/ies_delgado_hernandez"
 LOG_FILE="$HOME/rclone_backup.log"
 REMOTE_NAME="googledrive"
 REMOTE_DIR="backup_odoo/ies_delgado_hernandez"
