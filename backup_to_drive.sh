@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (C) 2025 Daniel López Bermúdez
+# License AGPL-3.0 (https://www.gnu.org/licenses/agpl-3.0.html)
 
 LOCAL_PATH="$HOME/odoo-project-management-education/odoo_backups/ies_delgado_hernandez"
 LOG_FILE="$HOME/rclone_backup.log"
